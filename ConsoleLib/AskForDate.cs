@@ -42,8 +42,12 @@ namespace ConsoleLib
                 {
                     if (Parameters.DefaultDate != null)
                     {
-                        Console.WriteLine(Parameters.DefaultValueMessage,
-                            Parameters.DefaultDate.Value.ToString(Parameters.Format));
+                        ConsoleUtilities.SetTemporaryConsolePosition(() =>
+                            {
+                                Console.WriteLine(Parameters.DefaultValueMessage,
+                                    Parameters.DefaultDate.Value.ToString(Parameters.Format));
+                            }, Console.CursorTop - 1, 0);
+
                         return Parameters.DefaultDate.Value;
                     }
 
