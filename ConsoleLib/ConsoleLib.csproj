@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Redbaty.ConsoleLib</PackageId>
+    <PackageDescription>Lots of classes to help with console applications.</PackageDescription>
+    <PackageProjectUrl>https://github.com/redbaty/ConsoleLib</PackageProjectUrl>
   </PropertyGroup>
 
 </Project>
