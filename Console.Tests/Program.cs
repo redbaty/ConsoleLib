@@ -7,10 +7,12 @@ namespace Console.Tests
     {
         static void Main(string[] args)
         {
+            var choice = AskFor.Choice(new AskForChoice<string>("Testing",
+                new AskForChoiceOptions {CanChooseMultiple = true, Required = true}, "Hello", "World"));
+
             var date = AskFor.Date("What day is it?",
                 new AskForDateOptions
                 {
-                    DefaultDate = DateTime.Today,
                     CustomValidation = time => time.Date != DateTime.Today
                         ? new AskForDateValidationResult(errorMessage: "This is not today.")
                         : new AskForDateValidationResult(true)
@@ -18,8 +20,6 @@ namespace Console.Tests
 
             var boolean = AskFor.Boolean("Do you like me?", 5);
 
-            var choice = AskFor.Choice(new AskForChoice<string>("Testing",
-                new AskForChoiceOptions {CanChooseMultiple = true, Required = true}, "Hello", "World"));
 
             foreach (var s in choice)
             {

@@ -27,7 +27,7 @@ namespace ConsoleLib
 
         public AskForChoice(string header, AskForChoiceOptions option, params TResponseType[] options)
         {
-            Question = header;
+            Question = header.EndsWith("?") ? header : $"{header}?";
             Parameters = option ?? new AskForChoiceOptions();
             Options = options.Select(i => new ConsoleRadioCheck<TResponseType>(Parameters.NameResolver.Invoke(i), i))
                 .ToList();
@@ -40,6 +40,7 @@ namespace ConsoleLib
         public List<TResponseType> Draw()
         {
             Console.CursorVisible = false;
+            StartPosition = Console.CursorTop;
 
             while (true)
             {
@@ -67,13 +68,24 @@ namespace ConsoleLib
 
                     if (Parameters.Required && consoleRadioChecks.Count <= 0) continue;
                     Console.CursorVisible = true;
+                    Clear();
+                    Console.WriteLine(Question + " > " + consoleRadioChecks
+                                          .Select(i => i.Message)
+                                          .Aggregate((x, y) => $"{x}, {y}"));
                     return consoleRadioChecks.Select(i => i.Value).ToList();
                 }
             }
         }
 
+        public int StartPosition { get; set; }
+
         private void Clear()
         {
+            var delta = StartPosition + Options.Count + 1;
+            for (var i = StartPosition; i < delta + StartPosition; i++)
+            {
+                ConsoleUtilities.ClearLine(i);
+            }
         }
 
         private void ToggleCurrent()
