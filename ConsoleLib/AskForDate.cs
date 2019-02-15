@@ -18,7 +18,10 @@ namespace ConsoleLib
         {
             while (true)
             {
-                Console.WriteLine($"{Question} ({Parameters.Format})");
+                Console.WriteLine($"{Question} ({Parameters.Format})" + (Parameters.DefaultDate != null
+                                      ? $" [{Parameters.DefaultDate.Value.ToString(Parameters.Format)}]"
+                                      : string.Empty));
+
                 var input = Console.ReadLine();
 
                 if (DateTime.TryParseExact(input, Parameters.Format, null, DateTimeStyles.None, out var dateTime))
@@ -37,6 +40,13 @@ namespace ConsoleLib
                 }
                 else
                 {
+                    if (Parameters.DefaultDate != null)
+                    {
+                        Console.WriteLine(Parameters.DefaultValueMessage,
+                            Parameters.DefaultDate.Value.ToString(Parameters.Format));
+                        return Parameters.DefaultDate.Value;
+                    }
+
                     if (!string.IsNullOrEmpty(Parameters.ErrorMessageFormat))
                         Console.WriteLine(Parameters.ErrorMessageFormat, input, Parameters.Format);
                 }

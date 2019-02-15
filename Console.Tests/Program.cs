@@ -10,6 +10,7 @@ namespace Console.Tests
             var date = AskFor.Date("What day is it?",
                 new AskForDateOptions
                 {
+                    DefaultDate = DateTime.Today,
                     CustomValidation = time => time.Date != DateTime.Today
                         ? new AskForDateValidationResult(errorMessage: "This is not today.")
                         : new AskForDateValidationResult(true)
